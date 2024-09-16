@@ -8,5 +8,6 @@
 .logo{
     height: 24px;
     width: 150px;
+    cursor: pointer;
     margin-left: calc((var(--width) - var(--content-width))/2);
 }

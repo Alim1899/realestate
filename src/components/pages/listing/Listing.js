@@ -41,10 +41,13 @@ const Listing = () => {
           </button>
         </div>
         <div className={classes.adds}>
-          <button className={classes.addListing} type="button">
+        <a href="add">
+           <button className={classes.addListing} type="button">
             <img className={classes.navIcon} src={plus} alt="plus"></img>
             ლისტინგის დამატება
           </button>
+        </a>
+         
           <button
             onClick={(e) => openModal(e)}
             className={classes.addAgent}

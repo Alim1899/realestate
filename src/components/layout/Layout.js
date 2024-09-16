@@ -1,11 +1,27 @@
 import Navbar from "../pages/navbar/Navbar"
 import Listing from "../pages/listing/Listing"
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import AddListing from "../pages/addListing/AddListing";
+import { Fragment } from "react";
+
 const Layout = () => {
+
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Listing />,
+    },
+    {
+      path: "/add",
+      element: <AddListing />,
+    },
+
+  ]);
   return (
-    <div>
+    <Fragment>
       <Navbar/>
-      <Listing/>
-    </div>
+      <RouterProvider router={router} />
+    </Fragment>
   )
 }
 
