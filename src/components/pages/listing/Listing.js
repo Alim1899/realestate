@@ -1,12 +1,26 @@
+import { useState } from "react";
 import classes from "./Listing.module.css";
 import plus from "../../../assets/icons/plus.svg";
 import redplus from "../../../assets/icons/redplus.svg";
 import down from "../../../assets/icons/down.svg";
 import x from "../../../assets/icons/x.svg";
 import Card from "../card/Card";
+import Modal from "../modal/Modal";
 const Listing = () => {
+  const [showModal, setShowModal] = useState(false);
+  const openModal = (e) => {
+    e.preventDefault();
+    setShowModal(true);
+    document.body.style.overflow = "hidden";
+  };
+  const closeModal = (e) => {
+    e.preventDefault();
+    setShowModal(false);
+    document.body.style.overflow = "auto";
+  };
   return (
     <div className={classes.main}>
+      {showModal && <Modal closeModal={closeModal} />}
       <div className={classes.nav}>
         <div className={classes.filters}>
           <button className={classes.filter}>
@@ -31,7 +45,11 @@ const Listing = () => {
             <img className={classes.navIcon} src={plus} alt="plus"></img>
             ლისტინგის დამატება
           </button>
-          <button className={classes.addAgent} type="button">
+          <button
+            onClick={(e) => openModal(e)}
+            className={classes.addAgent}
+            type="button"
+          >
             <img className={classes.navIcon} src={redplus} alt="plus"></img>
             აგენტის დამატება
           </button>
@@ -61,64 +79,64 @@ const Listing = () => {
         </div>
       </div>
       <div className={classes.cards}>
-        <Card 
-        type='ქირავდება'
+        <Card
+          type="ქირავდება"
           price="123000"
           location="თბილისი, ჭავჭავაძის 23ა"
           bedroom="2"
           area="55"
           postal="4500"
         />
-        <Card 
-        type='იყიდება'
+        <Card
+          type="იყიდება"
           price="123000"
           location="თბილისი, ჭავჭავაძის 23ა"
           bedroom="2"
           area="55"
           postal="4500"
         />
-        <Card 
-        type='გირავდება'
+        <Card
+          type="გირავდება"
           price="123000"
           location="თბილისი, ჭავჭავაძის 23ა"
           bedroom="2"
           area="55"
           postal="4500"
         />
-        <Card 
-        type='იყიდება'
+        <Card
+          type="იყიდება"
           price="123000"
           location="თბილისი, ჭავჭავაძის 23ა"
           bedroom="2"
           area="55"
           postal="4500"
         />
-        <Card 
-        type='ქირავდება'
+        <Card
+          type="ქირავდება"
           price="123000"
           location="თბილისი, ჭავჭავაძის 23ა"
           bedroom="2"
           area="55"
           postal="4500"
         />
-        <Card 
-        type='გირავდება'
+        <Card
+          type="გირავდება"
           price="123000"
           location="თბილისი, ჭავჭავაძის 23ა"
           bedroom="2"
           area="55"
           postal="4500"
         />
-        <Card 
-        type='ქირავდება'
+        <Card
+          type="ქირავდება"
           price="123000"
           location="თბილისი, ჭავჭავაძის 23ა"
           bedroom="2"
           area="55"
           postal="4500"
         />
-        <Card 
-        type='იყიდება'
+        <Card
+          type="იყიდება"
           price="123000"
           location="თბილისი, ჭავჭავაძის 23ა"
           bedroom="2"

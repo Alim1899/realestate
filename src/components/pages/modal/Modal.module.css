@@ -1,0 +1,120 @@
+.background{
+    width: var(--width);
+min-height: var(--height);
+    background-color: #02152634;
+    position: absolute;
+  top: 0;
+  left: 0;
+    z-index: 999999;
+}
+
+.main{
+    width: 1009px;
+    height: 784px;
+    background-color: #fff;
+    margin:auto;
+    margin-top: calc((var(--height) - 784px)/2); 
+    border: 10px;
+}
+.header{
+    text-align: center;
+    font-size: 32px;
+    padding-top: 40px;
+    color:#021526;
+    font-weight: 500;
+    
+}
+
+.form{
+    padding-top: 50px;
+    width: 799px;
+    height: 370px;
+    margin: auto;
+}
+.fullName,.contact{
+    height: 85px;
+    display: flex;
+    justify-content: space-between;
+}
+.contact{
+    margin-top: 20px;
+}
+.fullName>div>label, .contact>div>label{
+    display: flex;
+    flex-direction: column;
+    width: 384px;
+    height: 64px;
+    color: #021526;
+    font-weight: 500;
+    font-size: 14px;
+}
+.fullName>div>label>input,.contact>div>label>input{
+    height: 42px;
+    border-radius: 10px;
+    border: 1px solid #808A93;
+}
+.error{
+    color: crimson;
+}
+
+.photoInput{
+    height: 144px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.photoInputField{
+    height: 120px;
+    border: 1px dashed #808A93;
+    display: grid;
+    place-content: center;
+}
+.photoInputField>input{
+    display: none;
+}
+.preview{
+    max-height: 110px;
+}
+.addIcon{
+    height: 25px;
+    width: 25px;
+    margin:20px ;
+}
+
+.buttons{
+    margin-top:94px ;
+    display: flex;
+    justify-content: flex-end;
+}
+.cancel{
+    background-color: #fff;
+    outline: none;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 16px;
+    color: #f93b1d;
+    font-weight: 500;
+    margin-right: 15px;
+    border: 1px solid #f93b1d;
+}
+.addBtn{
+    background-color: #f93b1d;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.addBtn:hover,.cancel:hover{
+    opacity: 0.7;
+    cursor: pointer;
+}
+.imgs{
+    display: flex;
+    align-items: center;
+    width: 180px;
+    justify-content: center;
+    border: unset;
+}
