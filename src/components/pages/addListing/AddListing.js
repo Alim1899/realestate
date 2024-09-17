@@ -12,11 +12,14 @@ import classes from "./AddListing.module.css";
 const AddListing = () => {
   const [regions, setRegions] = useState([]);
   const [cities, setCities] = useState([]);
+  const [agentList,setAgentList] = useState([]);
   const [selectedRegionId, setSelectedRegionId] = useState(localStorage.getItem('selectedRegionId')||'');
 
   useEffect(() => {
-    fetchData(setRegions, setCities);
+    fetchData(setRegions, setCities,setAgentList);
+ 
   }, []);
+  console.log(agentList);
 
   return (
     <div className={classes.main}>
@@ -29,7 +32,7 @@ const AddListing = () => {
         {(formik) => (
           <Form
             className={classes.form}
-            onSubmit={() => submitForm(formik.errors)}
+            onSubmit={() => submitForm(formik.values)}
             onChange={(e) => changeHandler(e, formik.values.image)}
           >
             <div className={classes.type}>
@@ -233,9 +236,9 @@ const AddListing = () => {
                   <option disabled value="">
                     აირჩიე აგენტი
                   </option>
-                  <option>გიორგი ბრეგვაძე</option>
-                  <option>შოთა ბრეგვაძე</option>
-                  <option>ნანი ბრეგვაძე</option>
+                  {agentList.map(el=>{
+                    return <option key={el.id}>{el.name+' '+el.surname}</option>
+                  })}
                 </Field>
                 <ErrorMessage
                   name="agent"

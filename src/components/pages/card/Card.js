@@ -7,7 +7,7 @@ import classes from "./Card.module.css";
 const Card = (props) => {
   return (
     <div className={classes.main}>
-      <img className={classes.mainPhoto} src={home} alt="homePhoto"></img>
+      <img className={classes.mainPhoto} src={props.src||home} alt="homePhoto"></img>
       <h4 className={classes.saleType}>{props.type}</h4>
       <div className={classes.details}>
       <div className={classes.priceAndLocation}>

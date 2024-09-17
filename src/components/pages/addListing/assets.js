@@ -1,5 +1,7 @@
 
 import * as Yup from "yup";
+const token = process.env.REACT_APP_TOKEN;
+
 export const  validationSchema = Yup.object().shape({
     address: Yup.string()
       .required("აუცილებელი ველი")
@@ -46,20 +48,27 @@ export const  validationSchema = Yup.object().shape({
     selectedRegionId:localStorage.getItem("selectedRegionId") || ""
   };
 
-  export const fetchData = async (setRegions,setCities) => {
+  export const fetchData = async (setRegions,setCities,setAgentList) => {
     try {
       const regions = await fetch('https://api.real-estate-manager.redberryinternship.ge/api/regions');
       const cities = await fetch('https://api.real-estate-manager.redberryinternship.ge/api/cities');
-
+      const agents = await fetch('https://api.real-estate-manager.redberryinternship.ge/api/agents',{
+        headers: {
+          'Authorization':`Bearer ${token}`,
+        'accept':'application/json'
+        }
+       });
+       const agentList = await agents.json()
       const regionsData = await regions.json(); 
       const cityData = await cities.json();
       setRegions(regionsData)
       setCities(cityData)
+      setAgentList(agentList)
     } catch (error) {
       console.error('Error fetching data:', error); 
     }
   };
-
+  
   export const submitForm =(errors)=>{
     console.log(errors);
   }
@@ -80,3 +89,6 @@ export const  validationSchema = Yup.object().shape({
       localStorage.removeItem(e.target.name);
     }
   }
+
+
+

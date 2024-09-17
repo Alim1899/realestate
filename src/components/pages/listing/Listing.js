@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import classes from "./Listing.module.css";
 import plus from "../../../assets/icons/plus.svg";
 import redplus from "../../../assets/icons/redplus.svg";
@@ -8,6 +8,20 @@ import Card from "../card/Card";
 import Modal from "../modal/Modal";
 const Listing = () => {
   const [showModal, setShowModal] = useState(false);
+  const [listings,setListings] = useState([]);
+  const getListings = async()=>{
+    await fetch('https://api.real-estate-manager.redberryinternship.ge/api/real-estates',{
+     headers: {
+       'Authorization':`Bearer ${process.env.REACT_APP_TOKEN}`,
+     'accept':'application/json'
+     }
+    })
+    .then(response=>response.json())
+    .then(data=>setListings(data))
+ }
+ useEffect(()=>{
+  getListings();
+ })
   const openModal = (e) => {
     e.preventDefault();
     setShowModal(true);
@@ -82,70 +96,19 @@ const Listing = () => {
         </div>
       </div>
       <div className={classes.cards}>
-        <Card
-          type="ქირავდება"
-          price="123000"
-          location="თბილისი, ჭავჭავაძის 23ა"
-          bedroom="2"
-          area="55"
-          postal="4500"
+        {listings.map(el=>{
+          return <Card
+          key={el.id}
+          type={el.is_rental?'ქირავდება':"იყიდება"}
+          price={el.price||'0'}
+          location={el.address||'მითითებული არ არის'}
+          bedroom={el.bedrooms||'0'}
+          area={el.area||'0'}
+          postal={el.zip_code||'0000'}
+          src={el.image}
         />
-        <Card
-          type="იყიდება"
-          price="123000"
-          location="თბილისი, ჭავჭავაძის 23ა"
-          bedroom="2"
-          area="55"
-          postal="4500"
-        />
-        <Card
-          type="გირავდება"
-          price="123000"
-          location="თბილისი, ჭავჭავაძის 23ა"
-          bedroom="2"
-          area="55"
-          postal="4500"
-        />
-        <Card
-          type="იყიდება"
-          price="123000"
-          location="თბილისი, ჭავჭავაძის 23ა"
-          bedroom="2"
-          area="55"
-          postal="4500"
-        />
-        <Card
-          type="ქირავდება"
-          price="123000"
-          location="თბილისი, ჭავჭავაძის 23ა"
-          bedroom="2"
-          area="55"
-          postal="4500"
-        />
-        <Card
-          type="გირავდება"
-          price="123000"
-          location="თბილისი, ჭავჭავაძის 23ა"
-          bedroom="2"
-          area="55"
-          postal="4500"
-        />
-        <Card
-          type="ქირავდება"
-          price="123000"
-          location="თბილისი, ჭავჭავაძის 23ა"
-          bedroom="2"
-          area="55"
-          postal="4500"
-        />
-        <Card
-          type="იყიდება"
-          price="123000"
-          location="თბილისი, ჭავჭავაძის 23ა"
-          bedroom="2"
-          area="55"
-          postal="4500"
-        />
+        })}
+       
       </div>
     </div>
   );
