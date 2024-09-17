@@ -1,0 +1,145 @@
+.main{
+    width: var(--width);
+    height: var(--height);
+}
+
+.header{
+    text-align: center;
+    font-size: 32px;
+    padding-top: 40px;
+    color:#021526;
+    font-weight: 500;
+}
+.form{
+    width: 790px;
+    height: 1211px;
+    margin: auto;
+    margin-top: 60px;
+}
+.fieldHead{
+    color: #1a1a1f;
+    font-size: 16px;
+    font-weight: 500;
+}
+.error{
+    color: crimson;
+    font-size: 12px;
+    font-weight: 600;
+    
+}
+
+.type input:nth-of-type(2) {
+  margin-left: 50px;
+}
+.type>input{
+  margin-top: 10px;
+}
+  .saleType{
+    margin-left:5px;
+    color: #021526;
+    font-weight: 500;
+    font-size: 14px;
+
+  }
+
+  .address{
+    margin-top:20px ; 
+  }
+  .location>label,.agent>label,.region>label,.about>label{
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    color: #021526;
+    font-weight: 500;
+  }
+.location,.region{
+ height: 84px;
+ margin-top: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.about{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;  
+}
+.location>label>input,.region>label>select,.agent>label>select,.about>label>input{
+  height: 42px;
+  width: 384px;
+  border-radius: 10px;
+  border: 1px solid #808A93;
+}
+.description{
+  width: 100%;
+  margin-top: 10px;
+  height: 135px;
+}
+.description>label>input{
+  height: 100%;
+  border: 1px solid #808A93;
+  width: 100%;
+}
+
+
+.photoInput{
+  height: 124px;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+}
+.photoInputField{
+  height: 120px;
+  border: 1px dashed #808A93;
+  display: grid;
+  place-content: center;
+}
+.photoInputField>input{
+  display: none;
+}
+.preview{
+  max-height: 110px;
+  max-width: 300px;
+}
+.addIcon{
+  height: 25px;
+  width: 25px;
+  margin:20px ;
+}
+
+.agent{
+  margin-top: 50px;
+}
+.buttons{
+  margin-top:94px ;
+  display: flex;
+  justify-content: flex-end;
+}
+.cancel{
+  background-color: #fff;
+  outline: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+
+  margin-right: 15px;
+  border: 1px solid #f93b1d;
+}
+.cancel>a{  
+  font-size: 16px;
+ text-decoration: none;
+  font-weight: 500;
+   color: #f93b1d;
+}
+.addBtn{
+  background-color: #f93b1d;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.addBtn:hover,.cancel:hover{
+  opacity: 0.7;
+  cursor: pointer;
+}
