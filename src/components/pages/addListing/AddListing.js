@@ -242,7 +242,7 @@ const AddListing = () => {
       </Formik>
       {succes && (
           <div className={classes.succes}>
-            <h1 className={classes.succesMessage}>განცხადება დამატებულაი✅</h1>
+            <h1 className={classes.succesMessage}>განცხადება დამატებული✅</h1>
           </div>
         )}
     </div>

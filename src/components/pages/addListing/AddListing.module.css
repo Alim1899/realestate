@@ -146,3 +146,17 @@
   opacity: 0.7;
   cursor: pointer;
 }
+.succes{
+  position: absolute;
+ top: calc(var(--height)/4);
+ left: calc(var(--width)/4);
+  width: calc(var(--width)/2);
+  height: calc(var(--height)/2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #565f59;
+  color: #fff;
+  border-radius: 50px;
+  font-size: 1.4rem;
+}

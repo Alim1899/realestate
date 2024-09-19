@@ -154,15 +154,17 @@ export const  validationSchema = Yup.object().shape({
       });
 
   
-      if (!response.ok) {
-      setSucces(true);
-console.log(await response.text());
-      setTimeout(() => {
-        setSucces(false)
-      }, 1500);
+      if (response.ok) {
+        setSucces(true);
+        formik.resetForm();
+         sessionStorage.clear();
+         setTimeout(() => {
+           setSucces(false)
+         }, 1500);
+
     
       } else{
-        console.log("SUCCES");
+        console.log(await response.text());
       }
     } catch (error) {
       console.log('Error:', error);
