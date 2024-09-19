@@ -4,36 +4,40 @@ import {
   validationSchema,
   initialValues,
   fetchData,
-  submitForm,
+  handleSubmit,
   changeHandler,
 } from "./assets";
 import add from "../../../assets/icons/add.svg";
 import classes from "./AddListing.module.css";
 const AddListing = () => {
+  const [succes, setSucces] = useState(false);
   const [regions, setRegions] = useState([]);
   const [cities, setCities] = useState([]);
   const [agentList,setAgentList] = useState([]);
-  const [selectedRegionId, setSelectedRegionId] = useState(localStorage.getItem('selectedRegionId')||'');
+  const [previewSrc,setPreviewSrc] = useState(sessionStorage.getItem("listingImage"))
+  const [selectedRegionId, setSelectedRegionId] = useState(sessionStorage.getItem('region_id')||'');
 
   useEffect(() => {
     fetchData(setRegions, setCities,setAgentList);
  
   }, []);
-  console.log(agentList);
+
 
   return (
     <div className={classes.main}>
       <h2 className={classes.header}>ლისტინგის დამატება</h2>
       <Formik
-        validateOnChange
+        validateOnChange={true}
+        validateOnBlur={false}
         initialValues={initialValues}
         validationSchema={validationSchema}
+        onSubmit={() => {
+        }}
       >
         {(formik) => (
           <Form
             className={classes.form}
-            onSubmit={() => submitForm(formik.values)}
-            onChange={(e) => changeHandler(e, formik.values.image)}
+            onChange={(e) => changeHandler(e, formik,setSelectedRegionId,setPreviewSrc)}
           >
             <div className={classes.type}>
               <h2 className={classes.fieldHead}>გარიგების ტიპი:</h2>
@@ -74,12 +78,6 @@ const AddListing = () => {
                 <label htmlFor="region">
                   რეგიონი
                   <Field
-                    onChange={(e) => {
-                      const selectedRegionId = e.target.selectedOptions[0].id;
-                      setSelectedRegionId(selectedRegionId);
-                      formik.values.city = "";
-                      formik.handleChange(e);
-                    }}
                     as="select"
                     name="region"
                     value={formik.values.region}
@@ -110,7 +108,7 @@ const AddListing = () => {
                     </option>
                     {cities.map((el) => {
                       return el.region_id === Number(selectedRegionId) ? (
-                        <option id={el.region_id} key={el.id}>
+                        <option id={el.id} key={el.id}>
                           {el.name}
                         </option>
                       ) : null;
@@ -130,7 +128,7 @@ const AddListing = () => {
               <div className={classes.about}>
                 <label htmlFor="price">
                   ფასი
-                  <Field type="text" name="price" value={formik.values.price} />
+                  <Field type="number" name="price" value={formik.values.price} />
                   <ErrorMessage
                     name="price"
                     component="div"
@@ -139,7 +137,7 @@ const AddListing = () => {
                 </label>
                 <label htmlFor="area">
                   ფართობი
-                  <Field type="text" name="area" value={formik.values.area} />
+                  <Field type="number" name="area" value={formik.values.area} />
                   <ErrorMessage
                     name="area"
                     component="div"
@@ -164,6 +162,7 @@ const AddListing = () => {
                 <label>
                   აღწერა
                   <Field
+                  as='textarea'
                     type="text"
                     name="description"
                     values={formik.values.description}
@@ -180,48 +179,30 @@ const AddListing = () => {
             <div className={classes.photoInput}>
               <label htmlFor="listingImage">ატვირთეთ ფოტო:</label>
               <div className={classes.photoInputField}>
-                <Field
-                  id="fileInput"
-                  name="listingImage"
-                  type="file"
-                  accept="image/*"
-                  onChange={(event) => {
-                    const file = event.currentTarget.files[0];
-                    const maxSize = 1024 * 1024;
-                    if (file.size > maxSize) {
-                      alert("მაქსომალური ასატვირთი ზომა არის 1მბ");
-                      event.currentTarget.value = "";
-                      return;
-                    }
-
-                    if (file && file.type.startsWith("image/")) {
-                      const reader = new FileReader();
-                      reader.onload = () => {
-                        const imageURL = reader.result;
-                        formik.setFieldValue("image", imageURL);
-                        localStorage.setItem("listingImage", imageURL);
-                      };
-
-                      reader.readAsDataURL(file);
-                    }
-                  }}
-                />
-                <div className={classes.imgs}>
-                  {formik.values.image && (
-                    <img
-                      className={classes.preview}
-                      src={localStorage.getItem("listingImage")}
-                      alt="addedImage"
-                    />
-                  )}
-                  <img
-                    className={classes.addIcon}
-                    src={add}
-                    alt="add"
-                    onClick={() => document.getElementById("fileInput").click()}
+                  <Field
+                    id="fileInput"
+                    name="listingImage"
+                    type="file"
+                    accept="image/*"
                   />
+                  <div className={classes.imgs}>
+                    {formik.values.image && (
+                      <img
+                        className={classes.preview}
+                        src={previewSrc}
+                        alt="addedImage"
+                      />
+                    )}
+                    <img
+                      className={classes.addIcon}
+                      src={add}
+                      alt="add"
+                      onClick={() =>
+                        document.getElementById("fileInput").click()
+                      }
+                    />
+                  </div>
                 </div>
-              </div>
               <ErrorMessage
                 name="image"
                 component="div"
@@ -237,7 +218,8 @@ const AddListing = () => {
                     აირჩიე აგენტი
                   </option>
                   {agentList.map(el=>{
-                    return <option key={el.id}>{el.name+' '+el.surname}</option>
+                    
+                    return <option key={el.id} id={el.id}>{el.name+' '+el.surname}</option>
                   })}
                 </Field>
                 <ErrorMessage
@@ -251,13 +233,18 @@ const AddListing = () => {
               <button className={classes.cancel} type="button">
                 <a href="/">გაუქმება</a>
               </button>
-              <button className={classes.addBtn} type="submit">
+              <button onClick={()=>handleSubmit(formik.values, setSucces,formik)} className={classes.addBtn} type="submit">
                 დაამატე ლისტინგი
               </button>
             </div>
           </Form>
         )}
       </Formik>
+      {succes && (
+          <div className={classes.succes}>
+            <h1 className={classes.succesMessage}>განცხადება დამატებულაი✅</h1>
+          </div>
+        )}
     </div>
   );
 };

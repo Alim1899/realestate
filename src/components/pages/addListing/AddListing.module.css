@@ -68,16 +68,19 @@
   width: 384px;
   border-radius: 10px;
   border: 1px solid #808A93;
+  
 }
 .description{
   width: 100%;
   margin-top: 10px;
   height: 135px;
 }
-.description>label>input{
+.description>label>textarea{
   height: 100%;
   border: 1px solid #808A93;
   width: 100%;
+  border-radius:10px ;
+ 
 }
 
 

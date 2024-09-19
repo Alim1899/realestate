@@ -20,6 +20,8 @@ const Modal = (props) => {
           initialValues={initialValues}
           validationSchema={validationSchema}
           validateOnChange={true}
+          onSubmit={() => {
+     }}
         >
           {(formik) => (
             <Form
