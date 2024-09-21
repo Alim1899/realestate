@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import classes from "./TargetListing.module.css";
 import back from "../../../assets/icons/back.svg";
 import { useEffect, useState } from "react";
+import Carousel from "./carousel";
 import { getListing, formatDate, deleteListing } from "./assets";
 import location from "../../../assets/icons/location.svg";
 import area from "../../../assets/icons/area.svg";
@@ -125,6 +126,7 @@ const TargetListing = () => {
             </div>
           )}
         </div>
+        <Carousel />
       </div>
     )
   );
