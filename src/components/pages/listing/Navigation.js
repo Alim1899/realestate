@@ -3,7 +3,7 @@ import plus from "../../../assets/icons/plus.svg";
 import redplus from "../../../assets/icons/redplus.svg";
 import up from "../../../assets/icons/up.svg";
 import down from "../../../assets/icons/down.svg";
-import { renderByRegion, renderByPrice } from "./assets";
+import { renderByRegion, renderByPrice, renderByArea} from "./assets";
 import classes from "./Listing.module.css";
 import { fetchData } from "./assets";
 const Navigation = ({
@@ -15,14 +15,15 @@ const Navigation = ({
   setFilteredRegions,
   regionsFilter,
   showRegionsFilter,
-  setFilterSelected,
   showPriceFilter,
   setShowPriceFilter,
  setMinprice,setMaxprice,
  setShowAreaFilter,
  showAreaFilter,
  showBedFilter,
- setShowBedFilter
+ setShowBedFilter,
+ setMaxArea,
+ setMinArea
 }) => {
   const [regions, setRegions] = useState([]);
   useEffect(() => {
@@ -69,7 +70,6 @@ const Navigation = ({
                     renderByRegion(
                       formik.values.region,
                       setFilteredRegions,
-                      setFilterSelected,
                       showRegionsFilter
                     )
                   }
@@ -201,7 +201,6 @@ const Navigation = ({
                       formik.values.minPrice,
                       formik.values.maxPrice,
                       setShowPriceFilter,
-                      setFilterSelected,
                       setMinprice,
                       setMaxprice
                     )
@@ -318,14 +317,16 @@ const Navigation = ({
                  <div className={classes.regionBtn}>
                 <button
                   onClick={() =>
-                    renderByRegion(
-                      formik.values.region,
-                      setFilteredRegions,
-                      setFilterSelected,
-                      showRegionsFilter
+                    renderByArea(
+                      formik.values.areaMin,
+                      formik.values.areaMax,
+                      setShowAreaFilter,
+                      setMinArea,
+                      setMaxArea
                     )
                   }
                   type="button"
+                  disabled={formik.values.areaMin>formik.values.areaMax}
                 >
                   არჩევა
                 </button>
@@ -359,6 +360,8 @@ const Navigation = ({
                 
                  <div className={classes.regionBtn}>
                 <button
+                
+                onClick={()=>renderByArea}
                   type="button"
                 >
                   არჩევა

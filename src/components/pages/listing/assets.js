@@ -82,42 +82,17 @@ export const closeModal = (e, setShowModal) => {
   document.body.style.overflow = "auto";
 };
 
-export const renderByRegion = (values,setFilteredRegions,setListingSelected,showRegionsFilter)=>{
+export const renderByRegion = (values,setFilteredRegions,showRegionsFilter)=>{
   setFilteredRegions(values)
   showRegionsFilter(false);
-if(values.length>0)setListingSelected(true);
-  else setListingSelected(false);
 }
-export const renderByPrice = (min,max,setShowPriceFilter,setPriceFilterSelected,setMinprice,setMaxprice)=>{
+export const renderByPrice = (min,max,setShowPriceFilter,setMinprice,setMaxprice)=>{
   setMinprice(min?min:0);
   setMaxprice(max);
-  if(max>=min)setPriceFilterSelected(true)
   setShowPriceFilter(false);
 }
-
-
-export const handleFilterClick = (filterType,showRegionsFilter,regionsFilter,setShowBedFilter,showBedFilter,setShowAreaFilter,showAreaFilter,setShowPriceFilter,showPriceFilter) => {
-  if(filterType==="regions"){
-    showRegionsFilter(!regionsFilter);
-    setShowBedFilter(false);
-    setShowAreaFilter(false);
-    setShowPriceFilter(false);
-  } else if(filterType==="bed"){
-    showRegionsFilter(false);
-    setShowAreaFilter(false);
-    setShowPriceFilter(false);
-setShowBedFilter(!showBedFilter);
-  } 
-  else if(filterType==="area"){
-    showRegionsFilter(false);
-    setShowAreaFilter(!showAreaFilter);
-    setShowPriceFilter(false);
-setShowBedFilter(false);
-  } 
-  else if(filterType==="price"){
-    showRegionsFilter(false);
-    setShowAreaFilter(false);
-    setShowPriceFilter(!showPriceFilter);
-setShowBedFilter(false);
-  } 
-};
+export const renderByArea = (min,max,setShowAreaFilter,setMinprice,setMaxprice)=>{
+  setMinprice(min?min:0);
+  setMaxprice(max);
+  setShowAreaFilter(false);
+}
