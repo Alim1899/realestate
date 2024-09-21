@@ -64,8 +64,7 @@
   margin-top: 1rem;
 }
 .filledContent {
-  width: 553px;
-  
+  width: 703px;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -83,11 +82,29 @@
   font-weight: 500;
   padding: 0 5px;
 }
+.defaultPrice{
+  height: 29px;
+  border-radius: 43px;
+  width: 190px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--border-color);
+
+}
+.priceRange{
+  font-size: 14px;
+  font-weight: 400;
+  width: 150px;
+  text-align: center;
+}
+
 
 .reset {
   background-color: unset;
   border: none;
   font-weight: 600;
+  
 }
 
 .cards {
@@ -272,4 +289,9 @@ input[type="checkbox"]:checked::after {
   font-weight: 500;
   padding: 0 5px;
   overflow-x:auto;
+}
+
+.priceBtn>button:disabled{
+  opacity: 0.6;
+  cursor: not-allowed;
 }

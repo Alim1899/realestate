@@ -4,7 +4,13 @@ import x from "../../../assets/icons/x.svg";
 import down from "../../../assets/icons/down.svg";
 import Card from "../card/Card";
 import Modal from "../modal/Modal";
-import { openModal, closeModal, getListings, initialValues } from "./assets";
+import {
+  openModal,
+  closeModal,
+  getListings,
+  initialValues,
+  validationSchema,
+} from "./assets";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Navigation from "./Navigation";
 const Listing = () => {
@@ -13,28 +19,48 @@ const Listing = () => {
   const [filteredRegions, setFilteredRegions] = useState([]);
   const [allSelectedRegions, showAllSelectedRegions] = useState(false);
   const [filteredListings, setFilteredListings] = useState([]);
-  const [listingSelected, setListingSelected] = useState(false);
 
-  useEffect(() => {
-    getListings(setListings);
-  }, []);
+  const [showPriceFilter, setShowPriceFilter] = useState(false);
+  const [filterSelected, setFilterSelected] = useState(false);
+  const [min, setMinprice] = useState('');
+  const [max, setMaxprice] = useState('');
 
-  useEffect(() => {
-    const filterListings = (listings, selectedRegions) => {
-      const newListing = listings.filter((listing) =>
-        selectedRegions.includes(listing.city.region.name)
+ useEffect(() => {
+  const filterListings = () => {
+    let regionFilteredListings = listings.filter((listing) =>
+      filteredRegions.includes(listing.city.region.name)
+    );
+    let priceFilteredListings = listings;
+    if (min < max) {
+      priceFilteredListings = listings.filter(
+        (el) => el.price >= min && el.price <= max
       );
-      setFilteredListings(newListing);
-    };
-    console.log(listingSelected);
-    filterListings(listings, filteredRegions);
-  }, [listings, filteredRegions, listingSelected]);
+    }else{
+      console.log(regionFilteredListings);
+      setFilteredListings(regionFilteredListings);
+      return;
+    }
+    const combinedListings = listings.filter(
+      (listing) =>
+        regionFilteredListings.includes(listing) || 
+        priceFilteredListings.includes(listing)
+    );
 
+    setFilteredListings(combinedListings);
+  };
+
+  filterListings();
+}, [listings, filteredRegions, min, max]);
+
+useEffect(() => {
+  getListings(setListings);
+}, []);
   return (
     <div className={classes.main}>
       {showModal && <Modal closeModal={(e) => closeModal(e, setShowModal)} />}
       <Formik
         initialValues={initialValues}
+        validationSchema={validationSchema}
         validateOnChange
         onSubmit={(values) => {
           console.log(values);
@@ -48,7 +74,11 @@ const Listing = () => {
               ErrorMessage={ErrorMessage}
               formik={formik}
               setFilteredRegions={setFilteredRegions}
-              setListingSelected={setListingSelected}
+              setFilterSelected={setFilterSelected}
+              showPriceFilter={showPriceFilter}
+              setShowPriceFilter={setShowPriceFilter}
+              setMinprice={setMinprice}
+              setMaxprice={setMaxprice}
             />
             <div className={classes.filled}>
               <div className={classes.filledContent}>
@@ -91,19 +121,36 @@ const Listing = () => {
                   <img
                     className={classes.navIcon}
                     onClick={() => {
-                      formik.setFieldValue("region", [])
-                      setListingSelected(false)}}
+                      formik.setFieldValue("region", []);
+                     setFilteredRegions([])
+                    }}
                     src={x}
                     alt="clear"
                   ></img>
                 </div>
 
-                <div className={classes.filledFilter}>
-                  <h4 className={classes.filterText}>55 მ² - 90 მ²</h4>
-                  <img className={classes.navIcon} src={x} alt="clear"></img>
+                <div className={classes.defaultPrice}>
+                  <h4
+                    onClick={() => {
+                      setShowPriceFilter(!showPriceFilter);
+                    }}
+                    className={classes.priceRange}
+                  >
+                    {formik.values.minPrice || 0}₾ -{" "}
+                    {formik.values.maxPrice || "∞ ₾"}
+                  </h4>
+                  <img
+                    className={classes.navIcon}
+                    onClick={() => {
+                      formik.setFieldValue("minPrice", "");
+                      formik.setFieldValue("maxPrice", "");
+                    }}
+                    src={x}
+                    alt="clear"
+                  ></img>
                 </div>
                 <div className={classes.filledFilter}>
-                  <h4 className={classes.filterText}>20000₾ - 100000₾</h4>
+                  <h4 className={classes.filterText}>55 მ² - 90 მ²</h4>
                   <img className={classes.navIcon} src={x} alt="clear"></img>
                 </div>
                 <div className={classes.filledFilter}>
@@ -120,7 +167,7 @@ const Listing = () => {
       </Formik>
 
       <div className={classes.cards}>
-        {listingSelected && filteredListings.length > 0 ? (
+        {filterSelected && filteredListings.length > 0 ? (
           filteredListings.map((el) => {
             return (
               <Card
@@ -136,7 +183,7 @@ const Listing = () => {
               />
             );
           })
-        ) : listingSelected && filteredListings.length === 0 ? (
+        ) : filterSelected && filteredListings.length === 0 ? (
           <div className={classes.notFound}>
             <h2>აღნიშნული მონაცემებით განცხადება ვერ მოიძებნა</h2>
           </div>
