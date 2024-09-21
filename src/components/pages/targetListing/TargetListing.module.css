@@ -1,104 +1,157 @@
-.main{
-    width: var(--content-width);
-    margin: auto;
-    margin-top: 70px;
+.main {
+  width: var(--content-width);
+  margin: auto;
+  margin-top: 70px;
 }
-.details{
-    margin-top: 29px;
-    display: flex;
+.details {
+  margin-top: 29px;
+  display: flex;
 }
-.image{
-    width: 839px;
-    display: flex;
-    flex-direction: column;
+.image {
+  width: 839px;
+  display: flex;
+  flex-direction: column;
 }
-.image>img{
-    height: 670px;
+.image > img {
+  height: 670px;
+}
+.image > span {
+  text-align: right;
+  font-size: 16px;
+  color: #808a93;
+}
+.textDetails {
+  width: 503px;
+  height: 714px;
+  margin-left: 68px;
+  display: flex;
+  flex-direction: column;
+}
+.price > h1 {
+  font-size: 48px;
+  font-weight: 700;
+}
+.littleDetails {
+  margin-top: 8px;
+  height: 164px;
+}
+.littleDetails > h2 {
+  color: #808a93;
+  font-size: 24px;
+  margin-top: 16px;
+  font-weight: 500;
+}
+.littleDetails > h2 > img {
+  margin-right: 10px;
+}
+.description {
+  height: 78px;
+  width: 503px;
+  margin-top: 43px;
+  overflow: auto;
+  color: #808a93;
+}
+.agentDetails {
+  margin-top: 34px;
+  height: 144px;
+  width: 503px;
+  color: #808a93;
+  border: 2px solid #9196aa;
+}
+.agentName {
+  margin-left: 20px;
 
+  display: flex;
+  align-items: center;
 }
-.image>span{
-text-align: right;
-font-size: 16px;
-color: #808a93;
+.position {
+  margin-left: 20px;
 }
-.textDetails{
-    width: 503px;
-    height: 714px;
-    margin-left: 68px;
-    display: flex;
-    flex-direction: column;
+.position > h2 {
+  font-size: 16px;
 }
-.price>h1{
-    font-size: 48px;
-    font-weight: 700;
+.name {
+  color: #021526;
 }
-.littleDetails{
-    margin-top: 8px;
-    height: 164px;
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 100px;
 }
-.littleDetails>h2{
-color: #808a93;
-font-size: 24px;
-margin-top: 16px;
-font-weight: 500;
+.contact > h2 {
+  margin-left: 24px;
+  font-weight: 400;
 }
-.littleDetails>h2>img{
-    margin-right: 10px;
+.contact > h2:last-child {
+  margin-top: 6px;
 }
-.description{
-    height: 78px;
-    width: 503px;
-    margin-top: 43px;
-    overflow: auto;
-    color: #808a93;
+.contact > h2 > img {
+  margin-right: 10px;
 }
-.agentDetails{
-    margin-top: 34px;
-    height: 144px;
-    width: 503px;
-    color: #808a93;
-    border: 2px solid #9196aa;
-}
-.agentName{
-    margin-left: 20px;
-    
-    display: flex;
-    align-items: center;
-}
-.position{
-    margin-left: 20px;
-}
-.position>h2{
-    font-size: 16px;
-}
-.name{
-    color: #021526;
-}
-.avatar{
-    width: 72px;
-    height: 72px;
-    border-radius: 100px;
-}
-.contact>h2{
-    margin-left: 24px;
-    font-weight: 400;
-}
-.contact>h2:last-child{
-    margin-top: 6px;
-}
-.contact>h2>img{
-    margin-right: 10px;
+.deleteBtn {
+  width: 131px;
+  height: 34px;
+  margin-top: 14px;
+  border-radius: 8px;
+  color: #808a93;
+  font-size: 12;
+  background-color: #fff;
+  border: 1px solid #808a93;
 }
 
-
-.deleteBtn{
-    
-    width: 131px;
-    height: 34px;
-    margin-top: 14px;
-    border-radius: 8px;
-    color: #808a93;
-    font-size: 12;
-    background-color: #fff;
-    border: 1px solid #808a93;
+.deleteListing {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  overflow: hidden;
+  height: 100vh;
+  background-color: #b6b0ac6e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+.content {
+  background-color: #fff;
+  width: 623px;
+  height: 222px;
+  border-radius: 20px;
+}
+.exit {
+  text-align: right;
+}
+.exit > img {
+  margin: 20px 20px 0 0;
+  height: 14px;
+}
+.question {
+  text-align: center;
+  font-weight: 400;
+  font-size: 20px;
+  margin-top: 20px;
+}
+.options {
+  margin-top: 24px;
+  text-align: center;
+}
+.option1 {
+  width: 103px;
+  height: 47px;
+  background-color: unset;
+  border: 1px solid #f93b1d;
+  color: #f93b1d;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 10px;
+}
+.option2 {
+  height: 47px;
+  width: 145px;
+  border-radius: 10px;
+  background-color: #f93b1d;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
 }
