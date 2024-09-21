@@ -1,14 +1,10 @@
 import * as Yup from 'yup';
 const token = process.env.REACT_APP_TOKEN;
-export  const handleBeforeUnload = () => {
-    sessionStorage.clear();
-  };
-
   export const initialValues = {
-    agentName: sessionStorage.getItem("agentName") || "",
-    agentLastName: sessionStorage.getItem("agentLastName") || "",
-    agentEmail: sessionStorage.getItem("agentEmail") || "",
-    agentNumber: sessionStorage.getItem("agentNumber") || "",
+    agentName:"",
+    agentLastName:"",
+    agentEmail: "",
+    agentNumber: "",
     image:"",
     agentImage:""
   };
@@ -34,7 +30,7 @@ export  const handleBeforeUnload = () => {
       .required("აუცილებელია ფოტოს ატვირთვა(max.1MB")
   });
 
-  export const changeHandler = (e, formik) => {
+  export const changeHandler = (e, formik,setImageUrl) => {
     const { name, value, files } = e.target;
   
     if (value) {
@@ -48,18 +44,15 @@ export  const handleBeforeUnload = () => {
           reader.onload = () => {
             const imageUrl = reader.result; 
             sessionStorage.setItem("agentImage", imageUrl); 
+            setImageUrl(imageUrl)
           };
   
           reader.readAsDataURL(file);
         } else {
           alert("მაქსიმალური ზომა არის 1მბ"); 
         }
-      } else {
-        sessionStorage.setItem(name, value);
-      }
-    } else {
-      sessionStorage.removeItem(name);
-    }
+      } 
+    } 
   };
   
 

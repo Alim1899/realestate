@@ -27,8 +27,7 @@ const AddListing = () => {
     <div className={classes.main}>
       <h2 className={classes.header}>ლისტინგის დამატება</h2>
       <Formik
-        validateOnChange={true}
-        validateOnBlur={false}
+        validateOnChange
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={() => {

@@ -7,26 +7,26 @@ import {
   handleSubmit,
 } from "./assets";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useState } from "react";
+import {useState } from "react";
 const Modal = (props) => {
   const [succes, setSucces] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
 
   return (
     <div className={classes.background} onClick={props.closeModal}>
       <div onClick={(e) => e.stopPropagation()} className={classes.main}>
         <h1 className={classes.header}>აგენტის დამატება</h1>
         <Formik
-          validateOnBlur={false}
+        
           initialValues={initialValues}
           validationSchema={validationSchema}
-          validateOnChange={true}
-          onSubmit={() => {
-     }}
+          validateOnChange
+          onSubmit={() => {}}
         >
           {(formik) => (
             <Form
               className={classes.form}
-              onChange={(e) => changeHandler(e, formik)}
+              onChange={(e) => changeHandler(e, formik,setImageUrl)}
             >
               <div className={classes.fullName}>
                 <div className={classes.name}>
@@ -106,7 +106,7 @@ const Modal = (props) => {
                     {formik.values.image && (
                       <img
                         className={classes.preview}
-                        src={sessionStorage.getItem("agentImage")}
+                        src={imageUrl}
                         alt="addedImage"
                       />
                     )}
