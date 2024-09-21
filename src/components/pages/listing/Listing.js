@@ -27,52 +27,43 @@ const Listing = () => {
   const [max, setMaxprice] = useState("");
   const [minArea, setMinArea] = useState("");
   const [maxArea, setMaxArea] = useState("");
-  const [bedrooms,setBedrooms] = useState();
+  const [bedrooms, setBedrooms] = useState();
 
-  useEffect(()=>{
-
-    if(!max&&!maxArea&&filteredRegions.length===0&&!bedrooms){
-setFilterSelected(false)
-    }else{
-      setFilterSelected(true)
+  useEffect(() => {
+    if (!max && !maxArea && filteredRegions.length === 0 && !bedrooms) {
+      setFilterSelected(false);
+    } else {
+      setFilterSelected(true);
     }
-
-  },[min,max,filteredRegions,maxArea,minArea,filterSelected,bedrooms])
-
-
+  }, [min, max, filteredRegions, maxArea, minArea, filterSelected, bedrooms]);
 
   useEffect(() => {
     const filterListings = () => {
       let regionFilteredListings = listings;
-    if(filteredRegions.length>0){
-      regionFilteredListings = listings.filter((listing) =>
-        filteredRegions.includes(listing.city.region.name)
-      );
-    }else regionFilteredListings = [];
-      
+      if (filteredRegions.length > 0) {
+        regionFilteredListings = listings.filter((listing) =>
+          filteredRegions.includes(listing.city.region.name)
+        );
+      } else regionFilteredListings = [];
+
       let priceFilteredListings = listings;
       if (max) {
         priceFilteredListings = listings.filter(
           (el) => el.price >= min && el.price <= max
         );
       } else priceFilteredListings = [];
-      
+
       let areaFilteredListings = listings;
       if (maxArea) {
         areaFilteredListings = listings.filter(
           (el) => el.area >= minArea && el.area <= maxArea
         );
-      }else areaFilteredListings = [];
-      let bedFilteredListings = listings
-      if(bedrooms){
-        bedFilteredListings = listings.filter(
-          (el)=>el.bedrooms===bedrooms
-        )
-      }else bedFilteredListings = [];
-      console.log(bedFilteredListings);
+      } else areaFilteredListings = [];
+      let bedFilteredListings = listings;
+      if (bedrooms) {
+        bedFilteredListings = listings.filter((el) => el.bedrooms === bedrooms);
+      } else bedFilteredListings = [];
 
-     
-  
       let combinedListings = listings.filter(
         (listing) =>
           regionFilteredListings.includes(listing) ||
@@ -80,25 +71,21 @@ setFilterSelected(false)
           areaFilteredListings.includes(listing) ||
           bedFilteredListings.includes(listing)
       );
-  
+
       setFilteredListings(combinedListings);
     };
-  
+
     filterListings();
-  }, [listings, filteredRegions, min, max, minArea, maxArea,bedrooms]);
-  
-
-
-
+  }, [listings, filteredRegions, min, max, minArea, maxArea, bedrooms]);
 
   useEffect(() => {
     getListings(setListings);
   }, []);
-  
+
   useEffect(() => {
     getListings(setListings);
   }, []);
-  
+
   useEffect(() => {
     getListings(setListings);
   }, []);
@@ -141,6 +128,7 @@ setFilterSelected(false)
           <Form>
             <Navigation
               openModal={openModal}
+              setShowModal={setShowModal}
               Field={Field}
               regionsFilter={regionsFilter}
               showRegionsFilter={() => handleFilterClick("regions")}
@@ -164,7 +152,12 @@ setFilterSelected(false)
                 <div className={classes.filledFilter}>
                   {formik.values.region.length < 1 ? (
                     <div>
-                      <h4 onClick={()=>handleFilterClick("regions")} className={classes.inputRegion}>აირჩიე რეგიონი<img src={down}alt="down"></img></h4>
+                      <h4
+                        onClick={() => handleFilterClick("regions")}
+                        className={classes.inputRegion}
+                      >
+                        აირჩიე რეგიონი<img src={down} alt="down"></img>
+                      </h4>
                     </div>
                   ) : formik.values.region.length === 1 ? (
                     <h4 className={classes.inputRegion}>
@@ -175,9 +168,7 @@ setFilterSelected(false)
                       <h4 className={classes.inputRegion}>
                         {formik.values.region[0]}
                         <img
-                          onClick={() =>
-                           handleFilterClick("regions")
-                          }
+                          onClick={() => handleFilterClick("regions")}
                           src={down}
                           alt="down"
                         />
@@ -198,7 +189,7 @@ setFilterSelected(false)
                 <div className={classes.defaultPrice}>
                   <h4
                     onClick={() => {
-                      handleFilterClick("price")
+                      handleFilterClick("price");
                     }}
                     className={classes.priceRange}
                   >
@@ -210,16 +201,19 @@ setFilterSelected(false)
                     onClick={() => {
                       formik.setFieldValue("minPrice", "");
                       formik.setFieldValue("maxPrice", "");
-                      setMinprice("")
-                      setMaxprice("")
+                      setMinprice("");
+                      setMaxprice("");
                     }}
                     src={x}
                     alt="clear"
                   ></img>
                 </div>
                 <div className={classes.filledFilter}>
-                  <h4 className={classes.filterText} onClick={()=>handleFilterClick("area")}>
-                    {formik.values.minArea || 0} მ² -{" "}
+                  <h4
+                    className={classes.filterText}
+                    onClick={() => handleFilterClick("area")}
+                  >
+                    {formik.values.areaMin || 0} მ² -
                     {formik.values.areaMax || 0} მ²
                   </h4>
                   <img
@@ -227,22 +221,44 @@ setFilterSelected(false)
                     onClick={() => {
                       formik.setFieldValue("areaMin", "");
                       formik.setFieldValue("areaMax", "");
-                      setMinArea("")
-                      setMaxArea("")
+                      setMinArea("");
+                      setMaxArea("");
                     }}
                     src={x}
                     alt="clear"
                   ></img>
                 </div>
                 <div className={classes.filledFilter}>
-                  <h4 className={classes.filterText} onClick={()=>handleFilterClick("bed")}>{formik.values.bedroom}</h4>
-                  <img className={classes.navIcon} onClick={()=>{
-                    formik.setFieldValue('bedroom',"")
-                    setBedrooms("");
-                  }} src={x} alt="clear"></img>
+                  <h4
+                    className={classes.filterText}
+                    onClick={() => handleFilterClick("bed")}
+                  >
+                    {formik.values.bedroom}
+                  </h4>
+                  <img
+                    className={classes.navIcon}
+                    onClick={() => {
+                      formik.setFieldValue("bedroom", "");
+                      setBedrooms("");
+                    }}
+                    src={x}
+                    alt="clear"
+                  ></img>
                 </div>
 
-                <button className={classes.reset} type="reset">
+                <button
+                  onClick={() => {
+                    formik.resetForm();
+                    setMinArea("")
+                    setMaxArea("");
+                    setBedrooms("")
+                    setMinprice("")
+                    setMaxprice("")
+                    setFilteredRegions([])
+                  }}
+                  className={classes.reset}
+                  type="reset"
+                >
                   გასუფთავება
                 </button>
               </div>

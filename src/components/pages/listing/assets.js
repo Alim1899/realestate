@@ -9,7 +9,7 @@ export const validationSchema = Yup.object().shape({
       return !minPrice || !value || Number(value) >= Number(minPrice);
     }
   ),
-  areaMin:Yup.string(),
+  areaMin: Yup.string(),
   areaMax: Yup.string().test(
     "areaMaxGreatherThanAreaMin",
     "შეიყვანეთ ვალიდური რიცხვები",
@@ -18,7 +18,6 @@ export const validationSchema = Yup.object().shape({
       return !areaMin || !value || Number(value) >= Number(areaMin);
     }
   ),
-
 });
 export const initialValues = {
   region: sessionStorage.getItem("selectedRegions") || [],
@@ -27,8 +26,6 @@ export const initialValues = {
   areaMin: sessionStorage.getItem("areaMin") || "",
   areaMax: sessionStorage.getItem("areaMax") || "",
   bedroom: sessionStorage.getItem("bedroom") || "",
-
-
 };
 export const handleChange = (e, values, formik) => {
   if (e.target.name === "region") {
@@ -82,22 +79,38 @@ export const closeModal = (e, setShowModal) => {
   document.body.style.overflow = "auto";
 };
 
-export const renderByRegion = (values,setFilteredRegions,showRegionsFilter)=>{
-  setFilteredRegions(values)
+export const renderByRegion = (
+  values,
+  setFilteredRegions,
+  showRegionsFilter
+) => {
+  setFilteredRegions(values);
   showRegionsFilter(false);
-}
-export const renderByPrice = (min,max,setShowPriceFilter,setMinprice,setMaxprice)=>{
-  setMinprice(min?min:0);
+};
+export const renderByPrice = (
+  min,
+  max,
+  setShowPriceFilter,
+  setMinprice,
+  setMaxprice
+) => {
+  setMinprice(min ? min : 0);
   setMaxprice(max);
   setShowPriceFilter(false);
-}
-export const renderByArea = (min,max,setShowAreaFilter,setMinprice,setMaxprice)=>{
-  setMinprice(min?min:0);
+};
+export const renderByArea = (
+  min,
+  max,
+  setShowAreaFilter,
+  setMinprice,
+  setMaxprice
+) => {
+  setMinprice(min ? min : 0);
   setMaxprice(max);
   setShowAreaFilter(false);
-}
+};
 
-export const renderByBedroom = (bedrooms,setBedrooms,setSHowFilter)=>{
- setBedrooms(bedrooms);
-  setSHowFilter(false)
-}
+export const renderByBedroom = (bedrooms, setBedrooms, setSHowFilter) => {
+  setBedrooms(bedrooms);
+  setSHowFilter(false);
+};

@@ -3,7 +3,12 @@ import plus from "../../../assets/icons/plus.svg";
 import redplus from "../../../assets/icons/redplus.svg";
 import up from "../../../assets/icons/up.svg";
 import down from "../../../assets/icons/down.svg";
-import { renderByRegion, renderByPrice, renderByArea, renderByBedroom } from "./assets";
+import {
+  renderByRegion,
+  renderByPrice,
+  renderByArea,
+  renderByBedroom,
+} from "./assets";
 import classes from "./Listing.module.css";
 import { fetchData } from "./assets";
 const Navigation = ({
@@ -25,7 +30,7 @@ const Navigation = ({
   setShowBedFilter,
   setMaxArea,
   setMinArea,
-  setBedrooms
+  setBedrooms,
 }) => {
   const [regions, setRegions] = useState([]);
   useEffect(() => {
@@ -208,7 +213,7 @@ const Navigation = ({
                     )
                   }
                   type="button"
-                  disabled={formik.values.minPrice > formik.values.maxPrice}
+                  disabled={!formik.values.maxPrice||formik.values.minPrice > formik.values.maxPrice}
                 >
                   არჩევა
                 </button>
@@ -299,7 +304,7 @@ const Navigation = ({
                     )
                   }
                   type="button"
-                  disabled={formik.values.areaMin > formik.values.areaMax}
+                  disabled={!formik.values.areaMax||formik.values.areaMin > formik.values.areaMax}
                 >
                   არჩევა
                 </button>
@@ -329,7 +334,17 @@ const Navigation = ({
               </div>
 
               <div className={classes.regionBtn}>
-                <button onClick={() => renderByBedroom(formik.values.bedroom,setBedrooms,setShowBedFilter)} type="button">
+                <button
+                  onClick={() =>
+                    renderByBedroom(
+                      formik.values.bedroom,
+                      setBedrooms,
+                      setShowBedFilter
+                    )
+                  }
+                  type="button"
+                  disabled={!formik.values.bedroom}
+                >
                   არჩევა
                 </button>
               </div>
@@ -337,16 +352,6 @@ const Navigation = ({
           )}
         </div>
       </div>
-
-
-
-
-
-
-
-
-
-
 
       <div className={classes.adds}>
         <a href="add">
