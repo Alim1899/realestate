@@ -96,3 +96,8 @@ export const renderByArea = (min,max,setShowAreaFilter,setMinprice,setMaxprice)=
   setMaxprice(max);
   setShowAreaFilter(false);
 }
+
+export const renderByBedroom = (bedrooms,setBedrooms,setSHowFilter)=>{
+ setBedrooms(bedrooms);
+  setSHowFilter(false)
+}

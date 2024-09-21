@@ -27,16 +27,17 @@ const Listing = () => {
   const [max, setMaxprice] = useState("");
   const [minArea, setMinArea] = useState("");
   const [maxArea, setMaxArea] = useState("");
+  const [bedrooms,setBedrooms] = useState();
 
   useEffect(()=>{
 
-    if(!max&&!maxArea&&filteredRegions.length===0){
+    if(!max&&!maxArea&&filteredRegions.length===0&&!bedrooms){
 setFilterSelected(false)
     }else{
       setFilterSelected(true)
     }
 
-  },[min,max,filteredRegions,maxArea,minArea,filterSelected])
+  },[min,max,filteredRegions,maxArea,minArea,filterSelected,bedrooms])
 
 
 
@@ -62,6 +63,13 @@ setFilterSelected(false)
           (el) => el.area >= minArea && el.area <= maxArea
         );
       }else areaFilteredListings = [];
+      let bedFilteredListings = listings
+      if(bedrooms){
+        bedFilteredListings = listings.filter(
+          (el)=>el.bedrooms===bedrooms
+        )
+      }else bedFilteredListings = [];
+      console.log(bedFilteredListings);
 
      
   
@@ -69,14 +77,15 @@ setFilterSelected(false)
         (listing) =>
           regionFilteredListings.includes(listing) ||
           priceFilteredListings.includes(listing) ||
-          areaFilteredListings.includes(listing)
+          areaFilteredListings.includes(listing) ||
+          bedFilteredListings.includes(listing)
       );
   
       setFilteredListings(combinedListings);
     };
   
     filterListings();
-  }, [listings, filteredRegions, min, max, minArea, maxArea]);
+  }, [listings, filteredRegions, min, max, minArea, maxArea,bedrooms]);
   
 
 
@@ -148,6 +157,7 @@ setFilterSelected(false)
               setShowBedFilter={() => handleFilterClick("bed")}
               setMinArea={setMinArea}
               setMaxArea={setMaxArea}
+              setBedrooms={setBedrooms}
             />
             <div className={classes.filled}>
               <div className={classes.filledContent}>
@@ -225,8 +235,11 @@ setFilterSelected(false)
                   ></img>
                 </div>
                 <div className={classes.filledFilter}>
-                  <h4 className={classes.filterText} onClick={()=>handleFilterClick("bed")}>1</h4>
-                  <img className={classes.navIcon} src={x} alt="clear"></img>
+                  <h4 className={classes.filterText} onClick={()=>handleFilterClick("bed")}>{formik.values.bedroom}</h4>
+                  <img className={classes.navIcon} onClick={()=>{
+                    formik.setFieldValue('bedroom',"")
+                    setBedrooms("");
+                  }} src={x} alt="clear"></img>
                 </div>
 
                 <button className={classes.reset} type="reset">
