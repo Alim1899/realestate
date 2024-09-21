@@ -19,42 +19,67 @@ const Listing = () => {
   const [filteredRegions, setFilteredRegions] = useState([]);
   const [allSelectedRegions, showAllSelectedRegions] = useState(false);
   const [filteredListings, setFilteredListings] = useState([]);
-
+  const [regionsFilter, showRegionsFilter] = useState(false);
+  const [showBedFilter,setShowBedFilter] = useState(false);
+  const [showAreaFilter,setShowAreaFilter] = useState(false);
   const [showPriceFilter, setShowPriceFilter] = useState(false);
   const [filterSelected, setFilterSelected] = useState(false);
-  const [min, setMinprice] = useState('');
-  const [max, setMaxprice] = useState('');
-
- useEffect(() => {
-  const filterListings = () => {
-    let regionFilteredListings = listings.filter((listing) =>
-      filteredRegions.includes(listing.city.region.name)
-    );
-    let priceFilteredListings = listings;
-    if (min < max) {
-      priceFilteredListings = listings.filter(
-        (el) => el.price >= min && el.price <= max
-      );
-    }else{
-      console.log(regionFilteredListings);
-      setFilteredListings(regionFilteredListings);
-      return;
-    }
-    const combinedListings = listings.filter(
-      (listing) =>
-        regionFilteredListings.includes(listing) || 
-        priceFilteredListings.includes(listing)
-    );
-
-    setFilteredListings(combinedListings);
+  const [min, setMinprice] = useState("");
+  const [max, setMaxprice] = useState("");
+  const handleFilterClick = (filterType) => {
+    if(filterType==="regions"){
+      showRegionsFilter(!regionsFilter);
+      setShowBedFilter(false);
+      setShowAreaFilter(false);
+      setShowPriceFilter(false);
+    } else if(filterType==="bed"){
+      showRegionsFilter(false);
+      setShowAreaFilter(false);
+      setShowPriceFilter(false);
+setShowBedFilter(!showBedFilter);
+    } 
+    else if(filterType==="area"){
+      showRegionsFilter(false);
+      setShowAreaFilter(!showAreaFilter);
+      setShowPriceFilter(false);
+setShowBedFilter(false);
+    } 
+    else if(filterType==="price"){
+      showRegionsFilter(false);
+      setShowAreaFilter(false);
+      setShowPriceFilter(!showPriceFilter);
+setShowBedFilter(false);
+    } 
   };
+  useEffect(() => {
+    const filterListings = () => {
+      let regionFilteredListings = listings.filter((listing) =>
+        filteredRegions.includes(listing.city.region.name)
+      );
+      let priceFilteredListings = listings;
+      if (min < max) {
+        priceFilteredListings = listings.filter(
+          (el) => el.price >= min && el.price <= max
+        );
+      } else {
+        setFilteredListings(regionFilteredListings);
+        return;
+      }
+      const combinedListings = listings.filter(
+        (listing) =>
+          regionFilteredListings.includes(listing) ||
+          priceFilteredListings.includes(listing)
+      );
 
-  filterListings();
-}, [listings, filteredRegions, min, max]);
+      setFilteredListings(combinedListings);
+    };
 
-useEffect(() => {
-  getListings(setListings);
-}, []);
+    filterListings();
+  }, [listings, filteredRegions, min, max]);
+
+  useEffect(() => {
+    getListings(setListings);
+  }, []);
   return (
     <div className={classes.main}>
       {showModal && <Modal closeModal={(e) => closeModal(e, setShowModal)} />}
@@ -71,14 +96,20 @@ useEffect(() => {
             <Navigation
               openModal={openModal}
               Field={Field}
+              regionsFilter={regionsFilter}
+              showRegionsFilter={() => handleFilterClick("regions")}
               ErrorMessage={ErrorMessage}
               formik={formik}
               setFilteredRegions={setFilteredRegions}
               setFilterSelected={setFilterSelected}
               showPriceFilter={showPriceFilter}
-              setShowPriceFilter={setShowPriceFilter}
+              setShowPriceFilter={() => handleFilterClick("price")}
               setMinprice={setMinprice}
               setMaxprice={setMaxprice}
+              showAreaFilter={showAreaFilter}
+              setShowAreaFilter={() => handleFilterClick("area")}
+              showBedFilter={showBedFilter}
+              setShowBedFilter={() => handleFilterClick("bed")}
             />
             <div className={classes.filled}>
               <div className={classes.filledContent}>
@@ -122,7 +153,7 @@ useEffect(() => {
                     className={classes.navIcon}
                     onClick={() => {
                       formik.setFieldValue("region", []);
-                     setFilteredRegions([])
+                      setFilteredRegions([]);
                     }}
                     src={x}
                     alt="clear"

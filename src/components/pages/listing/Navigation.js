@@ -13,12 +13,17 @@ const Navigation = ({
   openModal,
   setShowModal,
   setFilteredRegions,
+  regionsFilter,
+  showRegionsFilter,
   setFilterSelected,
   showPriceFilter,
   setShowPriceFilter,
- setMinprice,setMaxprice
+ setMinprice,setMaxprice,
+ setShowAreaFilter,
+ showAreaFilter,
+ showBedFilter,
+ setShowBedFilter
 }) => {
-  const [regionsFilter, showRegionsFilter] = useState(false);
   const [regions, setRegions] = useState([]);
   useEffect(() => {
     fetchData(setRegions);
@@ -26,11 +31,7 @@ const Navigation = ({
 
   return (
     <div className={classes.nav}>
-      <div className={classes.filters}>
-        {/* COMPLETED |||||||||||||||||||||||||||||||||||||||||\*/}
-       
-       
-       
+      <div className={classes.filters}> 
         <div className={classes.region}>
           <button
             className={classes.filter}
@@ -80,7 +81,6 @@ const Navigation = ({
             </div>
           )}
         </div>
-        {/* |||||||||||||||||||||||||||||||||||||||||||||||| */}
 
         <div className={classes.price}>
           <button
@@ -215,29 +215,163 @@ const Navigation = ({
             </div>
           )}
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <button className={classes.filter}>
+<div className={classes.area}>
+  <button onClick={() => setShowAreaFilter(!showAreaFilter)} className={classes.filter} type="button">
           ფართობი
           <img src={down} className={classes.filterIcon} alt="down"></img>
         </button>
-        <button className={classes.filter}>
+        {showAreaFilter&&<div className={classes.areaField}>
+                <h3 className={classes.areaHead}>ფართობის მიხედვით</h3>
+                <div className={classes.areaMinmax}>
+                  <div className={classes.areaMin}>
+                    <Field
+                      name="areaMin"
+                      type="number"
+                      value={formik.values.areaMin}
+                    />
+                    <span>მ²</span>
+                    <div className={classes.priceExamples}>
+                      <h5>მინ. მ²</h5>
+                      <h4
+                        onClick={(e) => formik.setFieldValue("areaMin", 50)}
+                      >
+                        50.000 მ²
+                      </h4>
+                      <h4
+                        onClick={(e) =>
+                          formik.setFieldValue("areaMin", 75)
+                        }
+                      >
+                        75.000 მ²
+                      </h4>
+                      <h4
+                        onClick={(e) =>
+                          formik.setFieldValue("areaMin", 100)
+                        }
+                      >
+                        100.000 მ²
+                      </h4>
+                      <h4
+                        onClick={(e) =>
+                          formik.setFieldValue("areaMin", 150)
+                        }
+                      >
+                        150.000 მ²
+                      </h4>
+                      <h4
+                        onClick={(e) => formik.setFieldValue("areaMin", 200)}
+                      >
+                        200.000 მ²
+                      </h4>
+                    </div>
+                  </div>
+                  <div className={classes.areaMax}>
+                    <Field
+                      name="areaMax"
+                      type="number"
+                      value={formik.values.areaMax}
+                    />
+                    <span>მ²</span>
+                    <div className={classes.priceExamples}>
+                      <h5>მაქს. ფასი</h5>
+                      <h4
+                        onClick={(e) => formik.setFieldValue("areaMax", 50)}
+                      >
+                        50.000 მ²
+                      </h4>
+                      <h4
+                        onClick={(e) =>
+                          formik.setFieldValue("areaMax", 75)
+                        }
+                      >
+                        75.000 მ²
+                      </h4>
+                      <h4
+                        onClick={(e) =>
+                          formik.setFieldValue("areaMax", 100)
+                        }
+                      >
+                        100.000 მ²
+                      </h4>
+                      <h4
+                        onClick={(e) =>
+                          formik.setFieldValue("areaMax", 150)
+                        }
+                      >
+                        150.000 მ²
+                      </h4>
+                      <h4
+                        onClick={(e) =>
+                          formik.setFieldValue("areaMax", 200)
+                        }
+                      >
+                        200.000 მ²
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+                <ErrorMessage
+                  name="areaMax"
+                  component="div"
+                  className={classes.error}
+                />
+                 <div className={classes.regionBtn}>
+                <button
+                  onClick={() =>
+                    renderByRegion(
+                      formik.values.region,
+                      setFilteredRegions,
+                      setFilterSelected,
+                      showRegionsFilter
+                    )
+                  }
+                  type="button"
+                >
+                  არჩევა
+                </button>
+              </div>
+              </div>
+              }
+             
+</div>
+     
+
+
+
+      
+      <div className={classes.bedroom}>
+      <button type="button" className={classes.filter} onClick={()=>setShowBedFilter(!showBedFilter)}>
           საძინებლების რაოდენობა
           <img src={down} className={classes.filterIcon} alt="down"></img>
         </button>
-      </div>
+        {showBedFilter&&<div className={classes.bedroomField}>
+                <h3 className={classes.areaHead}>საძინებლების რაოდენობა</h3>
+                  <div className={classes.bedInput}>
+                    <Field
+                      name="bedroom"
+                      type="number"
+                      placeholder="2"
+                      value={formik.values.bedroom}
+                    />
+                    
+                  </div>
+              
+                
+                 <div className={classes.regionBtn}>
+                <button
+                  type="button"
+                >
+                  არჩევა
+                </button>
+              </div>
+              </div>
+              }
+             
+</div>
+ </div>
+
+
+
       <div className={classes.adds}>
         <a href="add">
           <button className={classes.addListing} type="button">

@@ -3,17 +3,32 @@ export const validationSchema = Yup.object().shape({
   minPrice: Yup.string(),
   maxPrice: Yup.string().test(
     "maxPriceGreaterThanMinPrice",
-    "შეიყვანეთ ვალიდური მონაცემები",
+    "შეიყვანეთ ვალიდური რიცხვები",
     function (value) {
       const { minPrice } = this.parent;
       return !minPrice || !value || Number(value) >= Number(minPrice);
     }
   ),
+  areaMin:Yup.string(),
+  areaMax: Yup.string().test(
+    "areaMaxGreatherThanAreaMin",
+    "შეიყვანეთ ვალიდური რიცხვები",
+    function (value) {
+      const { areaMin } = this.parent;
+      return !areaMin || !value || Number(value) >= Number(areaMin);
+    }
+  ),
+
 });
 export const initialValues = {
   region: sessionStorage.getItem("selectedRegions") || [],
   minPrice: sessionStorage.getItem("minPrice") || "",
   maxPrice: sessionStorage.getItem("maxPrice") || "",
+  areaMin: sessionStorage.getItem("areaMin") || "",
+  areaMax: sessionStorage.getItem("areaMax") || "",
+  bedroom: sessionStorage.getItem("bedroom") || "",
+
+
 };
 export const handleChange = (e, values, formik) => {
   if (e.target.name === "region") {
@@ -79,3 +94,30 @@ export const renderByPrice = (min,max,setShowPriceFilter,setPriceFilterSelected,
   if(max>=min)setPriceFilterSelected(true)
   setShowPriceFilter(false);
 }
+
+
+export const handleFilterClick = (filterType,showRegionsFilter,regionsFilter,setShowBedFilter,showBedFilter,setShowAreaFilter,showAreaFilter,setShowPriceFilter,showPriceFilter) => {
+  if(filterType==="regions"){
+    showRegionsFilter(!regionsFilter);
+    setShowBedFilter(false);
+    setShowAreaFilter(false);
+    setShowPriceFilter(false);
+  } else if(filterType==="bed"){
+    showRegionsFilter(false);
+    setShowAreaFilter(false);
+    setShowPriceFilter(false);
+setShowBedFilter(!showBedFilter);
+  } 
+  else if(filterType==="area"){
+    showRegionsFilter(false);
+    setShowAreaFilter(!showAreaFilter);
+    setShowPriceFilter(false);
+setShowBedFilter(false);
+  } 
+  else if(filterType==="price"){
+    showRegionsFilter(false);
+    setShowAreaFilter(false);
+    setShowPriceFilter(!showPriceFilter);
+setShowBedFilter(false);
+  } 
+};
